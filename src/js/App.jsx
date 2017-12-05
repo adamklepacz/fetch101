@@ -22,11 +22,13 @@ class App extends React.Component {
     componentDidMount(){
       // setInterval(this.countTime.bind(this), 1000);
       const dataTime = localStorage.getItem('contactsDate');
-      const contactsDate = dataTime && new Date(parseInt(dataTime));
+      const contactsTime = new Date(parseInt(dataTime));
       const now = new Date();
 
-      const dataAge = Math.round((now - contactsDate) / (1000 * 60)); //mins
-      const tooOld = dataAge >= 1;
+      const dataAge = (now - contactsTime);
+      const tooOld = dataAge >= 10000;
+      console.log('Data is ', dataAge, 'ms old.');
+
 
 
 
@@ -85,7 +87,14 @@ class App extends React.Component {
             <div>
                 <header>
                     <img src={image} />
-                    <h1>Fetching Data <button className="btn btn-sm btn-danger" onClick={this.fetchData.bind(this)}>Fetch now</button></h1>
+                    <h1>Fetching Data
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={(e) => {
+                          this.fetchData();
+                        }}>Fetch now
+                      </button>
+                    </h1>
                 </header>
                 <div className={`content ${isLoading ? 'is-loading' : ''}`}>
                     <div className="">
